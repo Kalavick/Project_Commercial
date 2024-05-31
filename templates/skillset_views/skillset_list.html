@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    List of Skills
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="header-title">List of Skills</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form id="Search" method="GET">
+                        <table id="skillset-table" class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Skill</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Date Added</th>
+                                    <th scope="col">Date Updated</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                <tr>
+                                    <th><input type="text" name="skill_id" class="form-control form-control-sm" placeholder="Search ID" value="{{ id_query }}" aria-label="Search by ID" onkeypress="checkEnter(event)" onblur="submitForm()"></th>
+                                    <th><input type="text" name="skill" class="form-control form-control-sm" placeholder="Search Skill" value="{{ skill_query }}" aria-label="Search by Skill" onkeypress="checkEnter(event)" onblur="submitForm()"></th>
+                                    <th><input type="text" name="cost" class="form-control form-control-sm" placeholder="Search Cost" value="{{ cost_query }}" aria-label="Search by Cost" onkeypress="checkEnter(event)" onblur="submitForm()"></th>
+                                    <th><input type="text" name="date_added" class="form-control form-control-sm" placeholder="Search Date Added" value="{{ date_added_query }}" aria-label="Search by Date Added" onkeypress="checkEnter(event)" onblur="submitForm()"></th>
+                                    <th><input type="text" name="date_updated" class="form-control form-control-sm" placeholder="Search Date Updated" value="{{ date_updated_query }}" aria-label="Search by Date Updated" onkeypress="checkEnter(event)" onblur="submitForm()"></th>
+                                    <th><button type="button" class="btn btn-sm btn-secondary" onclick="clearFilters()" aria-label="Clear Filters"><i class="bi bi-backspace"></i></button></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for skillset in skillsets %}
+                                <tr>
+                                    <td>{{ skillset.skill_id }}</td>
+                                    <td>{{ skillset.skill }}</td>
+                                    <td>{{ skillset.cost }}</td>
+                                    <td>{{ skillset.date_added | date:"Y-m-d" }}</td>
+                                    <td>{{ skillset.date_updated | date:"Y-m-d" }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{% url 'skillset_detail' skillset.pk %}" class="btn btn-sm border text-secondary" aria-label="View Skill"><i class="bi bi-eye-fill"></i></a>
+                                            <a href="{% url 'skillset_update' skillset.pk %}" class="btn btn-sm border text-primary" aria-label="Edit Skill"><i class="bi bi-pencil-fill"></i></a>
+                                            <a href="{% url 'skillset_delete' skillset.pk %}" class="btn btn-sm border text-danger" aria-label="Delete Skill" onclick="return confirm('Are you sure you want to delete this item?')"><i class="bi bi-trash-fill"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div> <!-- end table-responsive-->
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<a href="{% url 'skillset_create' %}" class="btn btn-primary">Add Skill</a>
+<script type="text/javascript">
+   function checkEnter(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            submitForm();
+        }
+    }
+
+    function submitForm() {
+        document.getElementById('Search').submit();
+    }
+
+    function clearFilters() {
+        const inputs = document.querySelectorAll('#Search input');
+        inputs.forEach(input => input.value = '');
+        submitForm();
+    }
+</script>
+
+{% endblock %}

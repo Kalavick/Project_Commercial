@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Skill Details
+{% endblock %}
+
+{% block content %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SkillSet Detail</title>
+    </head>
+    <body>
+        <!-- Back to SkillSet List link -->
+        <a href="{% url 'skillset_list' %}" class="btn btn-primary">
+            <i class="bi bi-arrow-left-circle-fill"></i>
+        </a>
+        <h1>{{ skillset.skill }}</h1>
+
+
+        <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <!-- <h4 class="header-title">List of Skills</h4> -->
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table id="skillset-table" class="table mb-0">
+                        <tr><th>Skill Id:</th><td>{{ skillset.skill_id }}</td></tr>
+
+                        <tr><th>Cost:</th><td>₦{{ skillset.cost }}</td></tr>
+                        <tr><th>Added By:</th><td>{{ skillset.added_by }}</td></tr>
+                        <tr><th>Date Added:</th><td>{{ skillset.date_added }}</td></tr>
+                        <tr><th>Updated By:</th><td>{{ skillset.updated_by }}</td></tr>
+                        <tr><th>Date Updated:</th><td>{{ skillset.date_updated }}</td></tr>
+                    </table>
+                </div>
+            </div>    
+
+        
+    </body>
+    </html>
+{% endblock %}
+
+{% include 'leftMenu.html' %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Delete Skill</h1>
+
+<p>Are you sure you want to delete the skill "{{ skillset.skill }}"?</p>
+
+<!-- Use the provided confirmation template -->
+<a class="btn btn-danger" href="{% url 'skillset_delete' skillset.pk %}" 
+   data-confirm="Are you sure you want to delete this item?" data-method="post">Delete</a>
+
+<a href="{% url 'skillset_list' %}" class="btn btn-secondary">Cancel</a>
+{% endblock %}

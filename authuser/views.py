@@ -5,13 +5,42 @@ from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, RegistrationForm
 from django.contrib.auth import authenticate, login, logout
 
-def authuser(request):
+
+def login_user(request):
+    if request.method  == 'POST':
+        email = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(email=email)
+        except:
+            messages.error(request, 'User does not exist')
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid email address and password')
+
+
+    context = {}
+    return render(request, 'authuser_views/auth-login.html', context)
+
+@login_required
+def user_logout(request):
+    logout(request)
+    #return redirect('home')
+
+
+def authuser(request) :
     # Check to see if loggin in
     breadcrumb = [
         {'label': 'Home', 'url': '/app'},
     ]
     context = {'username': 'username', 'breadcrumb': breadcrumb}
-    return render(request, 'authuser_views/index.html')
+    return render(request, 'authuser_views/index.html', context)
 
 def register(request):
     if not request.user.is_superuser:
@@ -27,7 +56,11 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'register.html', {'form': form})
 
-def login_user(request):
+
+
+
+
+#def login_user(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -41,14 +74,6 @@ def login_user(request):
                 messages.error(request, "Invalid email or password")
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
-
-@login_required
-def user_logout(request):
-    logout(request)
-    return redirect('home')
-
-
-def logout_user(request):
-    logout(request)
-    return redirect('login')
+    context = {}
+    return render(request, 'authuser_views/auth-login.html', context)
+    #return render(request, 'auth-login.html', {'form': form})

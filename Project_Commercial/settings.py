@@ -77,27 +77,17 @@ WSGI_APPLICATION = 'Project_Commercial.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'authuserDB',
-#         'USER': 'root',
-#         'PASSWORD': '0435',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DATABASE_NAME', 'authuserDB'),
-        'USER': os.getenv('DATABASE_USER', 'root'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', '0435'),
-        'HOST': os.getenv('DATABASE_HOST', 'db'),  # Change 'localhost' to 'db'
-        'PORT': os.getenv('DATABASE_PORT', '3306'),
+     'default': {
+         'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'authuserDB',
+         'USER': 'root',
+         'PASSWORD': '0435',
+         'HOST': 'localhost',
+         'PORT': '3306',
+        }
     }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
